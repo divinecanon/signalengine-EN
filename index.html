@@ -116,9 +116,22 @@
             line-height: 1.6;
         }
 
+        /* 手机端：sidebar 不再隐藏，改成顶部横向区块 */
         @media (max-width: 768px) {
-            .sidebar { display: none; }
-            .main-content { margin-left: 0; padding: 24px; }
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 24px;
+            }
         }
     </style>
 </head>
@@ -131,30 +144,20 @@
     </div>
 
     <div class="nav-links">
-    <div class="nav-section-title">Documentation</div>
-    <a href="./README.md"><i class="fas fa-book"></i> README</a>
-    <a href="./Signal%20for%20LLM.md"><i class="fas fa-file-alt"></i> Signal for LLM</a>
-</div>
-
-        <div class="nav-section-title">TGR Framework</div>
-        <a href="./TGR%20-%20Signal%20Flow%20Specification.md"><i class="fas fa-wave-square"></i> Signal Flow</a>
-        <a href="./TGR%20-%20Topology%20Primer.md"><i class="fas fa-project-diagram"></i> Topology Primer</a>
-        <a href="./TGR%20-%20Relational%20Logic.md"><i class="fas fa-link"></i> Relational Logic</a>
-
-        <div class="nav-section-title">System</div>
-        <a href="./CHANGELOG.md"><i class="fas fa-code-branch"></i> Changelog</a>
-        <a href="./FAQ.md"><i class="fas fa-question-circle"></i> FAQ</a>
+        <div class="nav-section-title">Documentation</div>
+        <a href="./README.md"><i class="fas fa-book"></i> README</a>
+        <a href="./Signal%20for%20LLM.md"><i class="fas fa-file-alt"></i> Signal for LLM</a>
     </div>
 </aside>
 
 <main class="main-content">
     <section class="hero">
-    <h2>SignalEngine / TGR</h2>
-    <p>
-        Documentation hub for Signal Engineering and the TGR<br>
-        (Thixotropic Generative Recursion) framework.
-    </p>
-</section>
+        <h2>SignalEngine / TGR</h2>
+        <p>
+            Documentation hub for Signal Engineering and the TGR<br>
+            (Thixotropic Generative Recursion) framework.
+        </p>
+    </section>
 
     <div style="color: var(--text-secondary); font-size: 14px; text-align: center; margin-top: 60px;">
         Powered by GitHub Pages & Termux 🚀
