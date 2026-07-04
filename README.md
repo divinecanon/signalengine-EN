@@ -1,3 +1,14 @@
+# Signal for LLM
+
+Signal for LLM: runtime state modulation layer for large language models via a Modulator component.
+
+📄 Source: [Signal for LLM.md](./Signal%20for%20LLM.md)
+
+🌐 Live site: https://divinecanon.github.io/signalengine-EN-/
+
+---
+
+
 ---
 
 
@@ -60,14 +71,14 @@ Recommended Reading Paths
 
 Theory
 
-TGR
+→ thixotropy
 → Navigation
 → Projection
 → Event
 
 Engineering
 
-Projection
+→ Projection
 → Signal
 → Signal Mapping
 → Signal Taxonomy
