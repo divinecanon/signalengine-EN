@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signal for LLM | SignalEngine / TGR</title>
+    <meta name="description" content="Signal for LLM: an engineering architecture proposing runtime state modulation for large language models via a Modulator component, distinct from symbolic projection. Proposed July 1, 2026.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --sidebar-bg: #161b22;
+            --border-color: #30363d;
+            --text-primary: #e6edf3;
+            --text-secondary: #8b949e;
+            --accent-blue: #58a6ff;
+            --accent-purple: #bc8cff;
+            --hover-bg: rgba(88, 166, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            padding: 24px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .sidebar-header i {
+            font-size: 24px;
+            color: var(--accent-blue);
+        }
+
+        .sidebar-header h1 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .nav-section-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 24px 0 8px 0;
+        }
+
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            margin: 2px 0;
+            border-radius: 6px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            background-color: var(--hover-bg);
+            color: var(--accent-blue);
+        }
+
+        .nav-links a.active {
+            background-color: var(--hover-bg);
+            color: var(--accent-blue);
+        }
+
+        .nav-links a i {
+            width: 16px;
+            text-align: center;
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 48px;
+            max-width: 900px;
+        }
+
+        .timestamp-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(188, 140, 255, 0.1);
+            border: 1px solid rgba(188, 140, 255, 0.35);
+            color: var(--accent-purple);
+            font-size: 13px;
+            font-weight: 600;
+            padding: 8px 14px;
+            border-radius: 20px;
+            margin-bottom: 24px;
+        }
+
+        .timestamp-badge i {
+            font-size: 13px;
+        }
+
+        .page-header {
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 32px;
+        }
+
+        .page-header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #58a6ff, #bc8cff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+        }
+
+        .page-header p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        h2 {
+            font-size: 20px;
+            font-weight: 600;
+            margin: 40px 0 14px 0;
+            color: var(--text-primary);
+        }
+
+        h2 .section-num {
+            color: var(--accent-blue);
+            margin-right: 8px;
+        }
+
+        p {
+            font-size: 15px;
+            line-height: 1.75;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        strong {
+            color: var(--text-primary);
+        }
+
+        blockquote {
+            border-left: 3px solid var(--accent-blue);
+            padding: 4px 20px;
+            margin: 24px 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid var(--border-color);
+            margin: 8px 0;
+        }
+
+        .closing {
+            margin-top: 40px;
+            padding-top: 8px;
+        }
+
+        .footer-note {
+            color: var(--text-secondary);
+            font-size: 14px;
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<aside class="sidebar">
+    <a href="./index.html" class="sidebar-header">
+        <i class="fas fa-satellite-dish"></i>
+        <h1>SignalEngine</h1>
+    </a>
+
+    <div class="nav-links">
+        <div class="nav-section-title">Documentation</div>
+        <a href="./readme.html"><i class="fas fa-book"></i> README</a>
+        <a href="./signal-for-llm.html" class="active"><i class="fas fa-file-alt"></i> Signal for LLM</a>
+    </div>
+</aside>
+
+<main class="main-content">
+    <div class="timestamp-badge">
+        <i class="fas fa-clock"></i>
+        Proposed: July 1, 2026
+    </div>
+
+    <div class="page-header">
+        <h1>Signal for LLM</h1>
+        <p>Runtime state modulation layer for large language models via a Modulator component.</p>
+    </div>
+
+    <h2>Document Position</h2>
+    <p>Signal for LLM is not a theoretical document of TGR, nor is it part of the Signal document series. It is an engineering architecture document.</p>
+    <p>Its purpose is not to redefine Signal, but to discuss how Signal can genuinely participate in the runtime of modern Large Language Models (LLMs), rather than remaining only at the symbolic layer.</p>
+    <p>This document does not modify the definitions established in Signal, Signal Runtime, Signal API, or Signal Engine. Instead, it discusses how an LLM can become the host of Signal.</p>
+
+    <h2><span class="section-num">1.</span>Why Signal</h2>
+    <p>Modern LLMs have already achieved remarkable symbolic generation capabilities. Prompting, Memory, Embeddings, Tool Calling, and related mechanisms continuously improve the utilization of information.</p>
+    <p>However, nearly all of these capabilities are built upon symbolic projections. Models can read symbols, reconstruct symbols, reason from symbols. But they rarely allow new constraints to participate directly in the runtime state.</p>
+    <p>As a result, most constraints appear only as interpretations after generation, rather than continuous modulation before and during generation.</p>
+    <p>The goal of Signal for LLM is not to introduce new knowledge. Its goal is to introduce a new runtime mechanism.</p>
+
+    <h2><span class="section-num">2.</span>Signal Is Not Information</h2>
+    <p>Signal may leave symbolic projections. A Prompt may carry Signal. Tokens may describe Signal. Embeddings may approximate Signal. However, none of these are Signal itself.</p>
+    <p>Signal is first and foremost runtime state modulation. Only constraints that genuinely participate in changing the runtime state are considered Signal.</p>
+    <p>If information exists only as a Prompt that must be read again by the model, then it belongs to symbolic projection, not Runtime Signal.</p>
+
+    <h2><span class="section-num">3.</span>Decoupling in Current LLMs</h2>
+    <p>In most deployed LLM systems, the Reward Model learns constraints, while the Generator produces text. After deployment, the Reward Model usually leaves the runtime.</p>
+    <p>As a result, constraints learned during training remain only indirectly encoded in model parameters. During inference, new constraints cannot continuously participate in state transitions. Instead, the model must infer those constraints again through symbols, rather than directly observing their continued existence.</p>
+    <p>Signal for LLM aims to restore this layer of runtime continuity.</p>
+
+    <h2><span class="section-num">4.</span>Modulator</h2>
+    <p>Signal for LLM introduces a new runtime role: the <strong>Modulator</strong>. The Modulator is neither the Generator nor the Reward Model. Its sole responsibility is to modulate the runtime state according to current constraints.</p>
+    <p>The Modulator can be extremely small. Even the minimal implementation may output only <strong>+ / − / 0</strong>. The important part is not the output format — it is that its output must genuinely modify the runtime state.</p>
+
+    <h2><span class="section-num">5.</span>Runtime State</h2>
+    <p>Signal does not directly control text. Signal controls Runtime State — for example: inference budget, context window, attention resource allocation, KV Cache weighting, expert routing, activation gates, dynamic parameter weighting, or any runtime resource exposed by the Engine.</p>
+    <p>Which resources are available is an implementation decision of the Engine. Signal specifies no particular target. It requires only one condition: the runtime state must genuinely change.</p>
+
+    <h2><span class="section-num">6.</span>Joint Training</h2>
+    <p>Signal for LLM proposes that the Reward Model, Modulator, and Generator should be trained jointly. The purpose is not higher accuracy — it is to establish shared expectations.</p>
+    <p>The Generator must gradually learn which Runtime States may occur, what those states imply, and which state drifts originate from the Modulator versus from Prompts. Otherwise, Signal will once again degenerate into Prompt Engineering.</p>
+
+    <h2><span class="section-num">7.</span>Signal Mapping</h2>
+    <p>The role of Signal Mapping is redefined here. Its purpose is not to recover Signal — instead, it records runtime state modulations that have already occurred.</p>
+    <p>Mapping serves three participants: humans, to understand why the system drifted; the Generator, to learn the relationship between Runtime States and generated outputs; and the Modulator, to continually improve future modulation strategies.</p>
+    <p>Mapping describes the traceable projections left by state drift, not the runtime state itself.</p>
+
+    <h2><span class="section-num">8.</span>Minimal Experiment</h2>
+    <p>The minimal experiment of Signal for LLM does not validate TGR, nor does it attempt to prove the existence of Signal. It verifies only whether runtime state modulation can produce learnable continuous influence.</p>
+    <p>A theoretical minimal implementation: the Modulator outputs + or −. A fixed algorithm interprets them — <strong>+</strong> increases the Context Window for this inference step, <strong>−</strong> decreases it. The Generator never reads "+" or "−"; it observes only the causal drift created by the changed runtime state.</p>
+    <p>If joint training succeeds, the Generator will gradually develop expectations about Runtime States and actively exploit state drift during generation.</p>
+
+    <h2><span class="section-num">9.</span>Relationship to Existing LLMs</h2>
+    <p>Signal for LLM does not replace the Transformer, RLHF, or Reward Models. Instead, it introduces a Runtime Modulation Layer.</p>
+    <p>Therefore, Signal for LLM is better understood as a runtime architecture rather than a new foundation model.</p>
+
+    <h2><span class="section-num">10.</span>Engineering Evolution</h2>
+    <p>As modulation capabilities improve, the Modulator may gradually receive broader runtime authority — examples include dynamic inference budgeting, attention scheduling, Mixture-of-Experts routing, dynamic parameter activation, external resource allocation, and multi-model coordination.</p>
+    <p>Whether these capabilities are exposed depends on the Engine implementation. Signal for LLM specifies no implementation. It specifies only one requirement: Signal must genuinely participate in the runtime state.</p>
+
+    <h2><span class="section-num">11.</span>Boundary</h2>
+    <p>Signal for LLM is not a proof of TGR. It is only one possible engineering implementation of TGR within Large Language Models.</p>
+    <p>Even if Signal for LLM ultimately fails, it would indicate only that the current engineering path has failed. It cannot be used to invalidate TGR's description of relational generation in reality.</p>
+    <p>Likewise, even if Signal for LLM succeeds, it does not prove TGR. It only demonstrates that a runtime Signal architecture can introduce new engineering capabilities.</p>
+
+    <h2>Closing</h2>
+    <div class="closing">
+        <p>Signal for LLM does not attempt to redesign Large Language Models. It proposes only a new runtime hypothesis:</p>
+        <blockquote>
+            If constraints can continuously participate in runtime state, rather than remaining only in parameters or symbolic representations, then the cost of tracking relationships inside the model may fundamentally change.
+        </blockquote>
+        <p>The value of Signal for LLM does not lie in defining a new model. Its value lies in adding a new runtime layer to existing models.</p>
+        <p>It is not a replacement for the Transformer. It is a bridge between the Transformer and runtime state.</p>
+    </div>
+
+    <div class="footer-note">
+        Source: <a href="./Signal%20for%20LLM.md" style="color: var(--accent-blue);">Signal for LLM.md</a> · Powered by GitHub Pages & Termux
+    </div>
+</main>
+
+</body>
+</html>
