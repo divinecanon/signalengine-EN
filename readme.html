@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TGR Documentation Index | SignalEngine</title>
+    <meta name="description" content="Navigation index for the TGR (Thixotropic Generative Recursion) documentation system: ten documents spanning theoretical foundations to Signal engineering implementation.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --sidebar-bg: #161b22;
+            --border-color: #30363d;
+            --text-primary: #e6edf3;
+            --text-secondary: #8b949e;
+            --accent-blue: #58a6ff;
+            --hover-bg: rgba(88, 166, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            padding: 24px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .sidebar-header i {
+            font-size: 24px;
+            color: var(--accent-blue);
+        }
+
+        .sidebar-header h1 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .nav-section-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 24px 0 8px 0;
+        }
+
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            margin: 2px 0;
+            border-radius: 6px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            background-color: var(--hover-bg);
+            color: var(--accent-blue);
+        }
+
+        .nav-links a.active {
+            background-color: var(--hover-bg);
+            color: var(--accent-blue);
+        }
+
+        .nav-links a i {
+            width: 16px;
+            text-align: center;
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 48px;
+            max-width: 900px;
+        }
+
+        .page-header {
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 32px;
+        }
+
+        .page-header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #58a6ff, #bc8cff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+        }
+
+        .page-header p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 40px 0 16px 0;
+            color: var(--text-primary);
+        }
+
+        p {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0 32px 0;
+            font-size: 14px;
+        }
+
+        th {
+            text-align: left;
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        td:first-child {
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
+
+        .reading-path {
+            background: var(--sidebar-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin-bottom: 20px;
+        }
+
+        .reading-path h3 {
+            font-size: 15px;
+            color: var(--accent-blue);
+            margin-bottom: 10px;
+        }
+
+        .reading-path .flow {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.9;
+        }
+
+        .status-list {
+            list-style: none;
+        }
+
+        .status-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 14px;
+        }
+
+        .status-list li span:first-child {
+            color: var(--text-primary);
+        }
+
+        .status-stable {
+            color: #3fb950;
+        }
+
+        .status-evolving {
+            color: #d29922;
+        }
+
+        blockquote {
+            border-left: 3px solid var(--accent-blue);
+            padding: 4px 20px;
+            margin: 24px 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .footer-note {
+            color: var(--text-secondary);
+            font-size: 14px;
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 24px;
+            }
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+            th {
+                display: none;
+            }
+            td {
+                border: none;
+                padding: 4px 0;
+            }
+            tr {
+                padding-bottom: 12px;
+                border-bottom: 1px solid var(--border-color);
+                margin-bottom: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<aside class="sidebar">
+    <a href="./index.html" class="sidebar-header">
+        <i class="fas fa-satellite-dish"></i>
+        <h1>SignalEngine</h1>
+    </a>
+
+    <div class="nav-links">
+        <div class="nav-section-title">Documentation</div>
+        <a href="./readme.html" class="active"><i class="fas fa-book"></i> README</a>
+        <a href="./signal-for-llm.html"><i class="fas fa-file-alt"></i> Signal for LLM</a>
+    </div>
+</aside>
+
+<main class="main-content">
+    <div class="page-header">
+        <h1>TGR Documentation Index</h1>
+        <p>The TGR documentation system consists of ten documents organized from theoretical foundations to engineering implementation. Each document has a clearly defined role and addresses one independent problem.</p>
+        <p>The documents are connected through interface constraints rather than direct dependencies. Any document may be replaced independently, provided that it preserves the interface constraints with adjacent layers.</p>
+    </div>
+
+    <h2>Theory</h2>
+    <table>
+        <thead>
+            <tr><th>Document</th><th>Role</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>TGR (Thixotropy)</td><td>Meta-theory describing how relational generation occurs.</td></tr>
+            <tr><td>Navigation</td><td>Operational framework for observing and working with TGR.</td></tr>
+            <tr><td>Event</td><td>Formation history of the TGR protocol under asymmetric constraints.</td></tr>
+            <tr><td>Projection</td><td>Theory of continuity through recoverable projections.</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Engineering</h2>
+    <table>
+        <thead>
+            <tr><th>Document</th><th>Role</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Signal</td><td>Engineering specification defining Signal.</td></tr>
+            <tr><td>Signal Mapping</td><td>Stable mapping between symbolic projections and tendency projections.</td></tr>
+            <tr><td>Signal Taxonomy</td><td>Classification of identified Signal types.</td></tr>
+            <tr><td>Signal Runtime</td><td>Runtime architecture of the Signal lifecycle.</td></tr>
+            <tr><td>Signal API</td><td>Stable interface specification.</td></tr>
+            <tr><td>Signal Engine</td><td>Engineering implementations of the API.</td></tr>
+        </tbody>
+    </table>
+
+    <h2>This Repository</h2>
+    <p>This repository currently provides the official English version of <strong>Signal for LLM</strong> <span style="color: var(--accent-blue); font-weight: 600;">(proposed July 1, 2026)</span>.</p>
+    <p>The remaining TGR documents are currently maintained primarily in Chinese. Machine translation is generally sufficient for understanding their technical content.</p>
+
+    <h2>Recommended Reading Paths</h2>
+    <div class="reading-path">
+        <h3>Theory</h3>
+        <div class="flow">Thixotropy → Navigation → Projection → Event</div>
+    </div>
+    <div class="reading-path">
+        <h3>Engineering</h3>
+        <div class="flow">Projection → Signal → Signal Mapping → Signal Taxonomy → Signal Runtime → Signal API → Signal Engine</div>
+    </div>
+    <div class="reading-path">
+        <h3>Quick Engineering Entry</h3>
+        <div class="flow">Signal → Signal API → Signal Engine</div>
+    </div>
+
+    <h2>Current Status</h2>
+    <p>All ten core documents have passed internal audit.</p>
+    <ul class="status-list">
+        <li><span>Theory</span><span class="status-stable">Stable</span></li>
+        <li><span>Signal Specification</span><span class="status-stable">Stable</span></li>
+        <li><span>Mapping</span><span class="status-stable">Stable</span></li>
+        <li><span>Runtime</span><span class="status-stable">Stable</span></li>
+        <li><span>API</span><span class="status-stable">Stable</span></li>
+        <li><span>Engine</span><span class="status-evolving">Evolves continuously</span></li>
+    </ul>
+
+    <h2>Updating Principle</h2>
+    <p>Theory documents evolve through full audit. Engineering specifications remain compatible with the theory.</p>
+    <p>Signal Taxonomy is open to new Signal types. APIs remain stable whenever possible. Engine implementations may evolve freely as long as API contracts are preserved.</p>
+
+    <blockquote>
+        This index serves only as a navigation document. It does not define any concept. The authoritative definitions are contained in the individual documents.
+    </blockquote>
+
+    <div class="footer-note">
+        Source: <a href="./README.md" style="color: var(--accent-blue);">README.md</a> · Powered by GitHub Pages & Termux
+    </div>
+</main>
+
+</body>
+</html>
