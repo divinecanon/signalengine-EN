@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TGR Documentation Index | SignalEngine</title>
-    <meta name="description" content="Navigation index for the TGR (Thixotropic Generative Recursion) documentation system: ten documents spanning theoretical foundations to Signal engineering implementation.">
+    <title>Signal for LLM: Runtime State Modulation Layer | SignalEngine</title>
+    <meta name="description" content="Signal for LLM: a decoupled Modulator architecture that writes to the runtime engine while the Generator stays ignorant. LLM Modulator architecture for agent runtime engineering. CC0 licensed.">
+    <meta name="keywords" content="LLM Modulator architecture, agent runtime engineering, runtime state modulation, LLM runtime, Signal for LLM">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -14,6 +15,8 @@
             --text-primary: #e6edf3;
             --text-secondary: #8b949e;
             --accent-blue: #58a6ff;
+            --accent-purple: #bc8cff;
+            --accent-green: #3fb950;
             --hover-bg: rgba(88, 166, 255, 0.1);
         }
 
@@ -102,6 +105,24 @@
             max-width: 900px;
         }
 
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(63, 185, 80, 0.1);
+            border: 1px solid rgba(63, 185, 80, 0.35);
+            color: var(--accent-green);
+            font-size: 13px;
+            font-weight: 600;
+            padding: 8px 14px;
+            border-radius: 20px;
+            margin-bottom: 24px;
+        }
+
+        .status-badge i {
+            font-size: 13px;
+        }
+
         .page-header {
             padding-bottom: 24px;
             border-bottom: 1px solid var(--border-color);
@@ -118,29 +139,69 @@
         }
 
         .page-header p {
-            font-size: 16px;
+            font-size: 17px;
             color: var(--text-secondary);
             line-height: 1.6;
         }
 
         h2 {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 600;
-            margin: 40px 0 16px 0;
+            margin: 40px 0 14px 0;
+            color: var(--text-primary);
+        }
+
+        h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 20px 0 10px 0;
             color: var(--text-primary);
         }
 
         p {
             font-size: 15px;
-            line-height: 1.7;
+            line-height: 1.75;
             color: var(--text-secondary);
             margin-bottom: 12px;
+        }
+
+        strong {
+            color: var(--text-primary);
+        }
+
+        code {
+            background: var(--sidebar-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-size: 13px;
+            color: var(--accent-blue);
+            font-family: "SF Mono", Consolas, monospace;
+        }
+
+        a {
+            color: var(--accent-blue);
+        }
+
+        blockquote {
+            border-left: 3px solid var(--accent-blue);
+            padding: 4px 20px;
+            margin: 20px 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        blockquote.callout {
+            background: var(--sidebar-bg);
+            border-left: 3px solid var(--accent-purple);
+            border-radius: 0 8px 8px 0;
+            padding: 14px 20px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 16px 0 32px 0;
+            margin: 16px 0 28px 0;
             font-size: 14px;
         }
 
@@ -160,37 +221,17 @@
 
         td:first-child {
             color: var(--text-primary);
-            white-space: nowrap;
-        }
-
-        .reading-path {
-            background: var(--sidebar-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 20px 24px;
-            margin-bottom: 20px;
-        }
-
-        .reading-path h3 {
-            font-size: 15px;
-            color: var(--accent-blue);
-            margin-bottom: 10px;
-        }
-
-        .reading-path .flow {
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.9;
         }
 
         .status-list {
             list-style: none;
+            margin-bottom: 20px;
         }
 
         .status-list li {
             display: flex;
             justify-content: space-between;
-            padding: 10px 0;
+            padding: 8px 0;
             border-bottom: 1px solid var(--border-color);
             font-size: 14px;
         }
@@ -200,26 +241,20 @@
         }
 
         .status-stable {
-            color: #3fb950;
+            color: var(--accent-green);
         }
 
-        .status-evolving {
-            color: #d29922;
-        }
-
-        blockquote {
-            border-left: 3px solid var(--accent-blue);
-            padding: 4px 20px;
-            margin: 24px 0;
-            color: var(--text-secondary);
-            font-style: italic;
+        hr {
+            border: none;
+            border-top: 1px solid var(--border-color);
+            margin: 32px 0;
         }
 
         .footer-note {
             color: var(--text-secondary);
             font-size: 14px;
             text-align: center;
-            margin-top: 60px;
+            margin-top: 40px;
             padding-top: 24px;
             border-top: 1px solid var(--border-color);
         }
@@ -273,79 +308,93 @@
 </aside>
 
 <main class="main-content">
+    <div class="status-badge">
+        <i class="fas fa-snowflake"></i>
+        Status: Frozen
+    </div>
+
     <div class="page-header">
-        <h1>TGR Documentation Index</h1>
-        <p>The TGR documentation system consists of ten documents organized from theoretical foundations to engineering implementation. Each document has a clearly defined role and addresses one independent problem.</p>
-        <p>The documents are connected through interface constraints rather than direct dependencies. Any document may be replaced independently, provided that it preserves the interface constraints with adjacent layers.</p>
+        <h1>Signal for LLM</h1>
+        <p><strong>Runtime state modulation layer for large language models.</strong><br>
+        Not another model. Not another training trick. A decoupled Modulator that writes to the engine while the Generator stays ignorant.</p>
     </div>
 
-    <h2>Theory</h2>
-    <table>
-        <thead>
-            <tr><th>Document</th><th>Role</th></tr>
-        </thead>
-        <tbody>
-            <tr><td>TGR (Thixotropy)</td><td>Meta-theory describing how relational generation occurs.</td></tr>
-            <tr><td>Navigation</td><td>Operational framework for observing and working with TGR.</td></tr>
-            <tr><td>Event</td><td>Formation history of the TGR protocol under asymmetric constraints.</td></tr>
-            <tr><td>Projection</td><td>Theory of continuity through recoverable projections.</td></tr>
-        </tbody>
-    </table>
+    <h2>Status</h2>
+    <p>Theory — complete. Architecture — defined. Interfaces — audited.</p>
+    <p>This repository is a <strong>release</strong>, not a proposal. The achievement is the blueprint. Experiments are an engineering hobby that follows.</p>
 
-    <h2>Engineering</h2>
-    <table>
-        <thead>
-            <tr><th>Document</th><th>Role</th></tr>
-        </thead>
-        <tbody>
-            <tr><td>Signal</td><td>Engineering specification defining Signal.</td></tr>
-            <tr><td>Signal Mapping</td><td>Stable mapping between symbolic projections and tendency projections.</td></tr>
-            <tr><td>Signal Taxonomy</td><td>Classification of identified Signal types.</td></tr>
-            <tr><td>Signal Runtime</td><td>Runtime architecture of the Signal lifecycle.</td></tr>
-            <tr><td>Signal API</td><td>Stable interface specification.</td></tr>
-            <tr><td>Signal Engine</td><td>Engineering implementations of the API.</td></tr>
-        </tbody>
-    </table>
+    <hr>
 
-    <h2>This Repository</h2>
-    <p>This repository currently provides the official English version of <strong>Signal for LLM</strong> <span style="color: var(--accent-blue); font-weight: 600;">(proposed July 1, 2026)</span>.</p>
-    <p>The remaining TGR documents are currently maintained primarily in Chinese. Machine translation is generally sufficient for understanding their technical content.</p>
-
-    <h2>Recommended Reading Paths</h2>
-    <div class="reading-path">
-        <h3>Theory</h3>
-        <div class="flow">Thixotropy → Navigation → Projection → Event</div>
-    </div>
-    <div class="reading-path">
-        <h3>Engineering</h3>
-        <div class="flow">Projection → Signal → Signal Mapping → Signal Taxonomy → Signal Runtime → Signal API → Signal Engine</div>
-    </div>
-    <div class="reading-path">
-        <h3>Quick Engineering Entry</h3>
-        <div class="flow">Signal → Signal API → Signal Engine</div>
-    </div>
-
-    <h2>Current Status</h2>
-    <p>All ten core documents have passed internal audit.</p>
-    <ul class="status-list">
-        <li><span>Theory</span><span class="status-stable">Stable</span></li>
-        <li><span>Signal Specification</span><span class="status-stable">Stable</span></li>
-        <li><span>Mapping</span><span class="status-stable">Stable</span></li>
-        <li><span>Runtime</span><span class="status-stable">Stable</span></li>
-        <li><span>API</span><span class="status-stable">Stable</span></li>
-        <li><span>Engine</span><span class="status-evolving">Evolves continuously</span></li>
-    </ul>
-
-    <h2>Updating Principle</h2>
-    <p>Theory documents evolve through full audit. Engineering specifications remain compatible with the theory.</p>
-    <p>Signal Taxonomy is open to new Signal types. APIs remain stable whenever possible. Engine implementations may evolve freely as long as API contracts are preserved.</p>
-
+    <h2>One Sentence</h2>
     <blockquote>
-        This index serves only as a navigation document. It does not define any concept. The authoritative definitions are contained in the individual documents.
+        Current LLMs are statically frozen after RLHF — the Generator runs, the constraints are dead.<br>
+        Signal for LLM puts constraints back into the runtime, where they belong.
+    </blockquote>
+
+    <h2>The Decoupling</h2>
+    <table>
+        <thead>
+            <tr><th>Role</th><th>What it does</th><th>Size</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Generator</td><td>Produces tokens</td><td>The whole model you already have</td></tr>
+            <tr><td>Modulator</td><td>Modulates runtime state (KV Cache, Context Window, Expert Routing, Inference Budget…)</td><td>Can be <code>+</code> / <code>-</code> / <code>0</code></td></tr>
+            <tr><td>Reward Model</td><td>Learns constraints during training</td><td>Already exists</td></tr>
+        </tbody>
+    </table>
+
+    <p>The Modulator is <strong>not</strong> the Generator. The Modulator is <strong>not</strong> the Reward Model. It is the third entity that survives deployment.</p>
+
+    <blockquote class="callout">
+        📎 The Generator does <strong>not</strong> read the Modulator's output. It only feels the causal drift in runtime state.<br><br>
+        If the Generator tries to "understand" the Modulator, Signal degrades into Prompt Engineering. Don't let it.
+    </blockquote>
+
+    <hr>
+
+    <h2>What Signal Is Not</h2>
+    <p>Signal is <strong>not</strong> a Prompt. Signal is <strong>not</strong> an Embedding. Signal is <strong>not</strong> information.</p>
+    <p>Signal is <strong>runtime state modulation that actually changes the machine</strong>. If it can only be read as a symbol, it's a projection. Not Signal.</p>
+
+    <hr>
+
+    <h2>Repository Map</h2>
+    <p>This repo carries the English release of <strong>Signal for LLM</strong> (engineering architecture). The TGR theoretical system (10 docs, Chinese-primary) is the upstream; this repo is the downstream engineering surface.</p>
+
+    <table>
+        <thead>
+            <tr><th>Layer</th><th>Doc</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Engineering entry</td><td><a href="./signal-for-llm.html">Signal for LLM</a></td></tr>
+            <tr><td>Spec</td><td>Signal</td></tr>
+            <tr><td>Mapping</td><td>Signal Mapping</td></tr>
+            <tr><td>Taxonomy</td><td>Signal Taxonomy</td></tr>
+            <tr><td>Runtime</td><td>Signal Runtime</td></tr>
+            <tr><td>API</td><td>Signal API</td></tr>
+            <tr><td>Engine</td><td>Signal Engine (evolving)</td></tr>
+        </tbody>
+    </table>
+
+    <p>Full TGR index → <a href="https://divinecanon.github.io/signalengine-EN/">Live site</a></p>
+
+    <hr>
+
+    <h2>License</h2>
+    <p><a href="./LICENSE">CC0 1.0</a>. No rights reserved. The architecture is a fact; facts don't belong to anyone.</p>
+
+    <hr>
+
+    <h2>"Proof"</h2>
+    <p>There is no benchmark to chase.</p>
+    <p>If modulating runtime state changes generation — and it does — the only remaining question is engineering pace, not existence.</p>
+
+    <blockquote class="callout">
+        🔻 <em>Modulator proposed → architecture complete → experiment optional.</em>
     </blockquote>
 
     <div class="footer-note">
-        Source: <a href="./README.md" style="color: var(--accent-blue);">README.md</a> · Powered by GitHub Pages & Termux
+        Source: <a href="./README.md">README.md</a> · Powered by GitHub Pages & Termux
     </div>
 </main>
 
